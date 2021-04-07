@@ -1,6 +1,7 @@
 #include <gtkmm.h>
 #include <cmath>
 #include <iostream>
+#include <iomanip>
 
 #define PI 3.141592653589793
 
@@ -69,18 +70,17 @@ win::win(Gtk::Main kit) {
 					df = 0-df;
 				}
 
-				std::string str = "";
-				// THE WORST STRING EVER
-				// TODO: Improve this string, by removing all the str.append()
-				// TODO: Fix degrees float precision (we want 6.9 degrees instead of 6.900000 degrees)
-				str.append("To reach this destination, you'll have to:\n\
-						1. Orient yourself by ");
-				str.append(std::to_string(round(df*10)/10));
-				str.append(" degrees\n\
-						2. Travel ");
-				str.append(std::to_string(r));
-				str.append(" blocks.");
-				result->set_text(str);
+				std::ostringstream str;
+				str.precision(1);
+				str << std::fixed;
+				str << "To reach this destination, you'll have to:\n";
+				str << "1. Orient yourself by ";
+				str << round(df*10)/10;
+				str << " degrees\n";
+				str << "2. Travel ";
+				str << r;
+				str << " blocks.";
+				result->set_text(str.str());
 				std::cout << round(df*10)/10 << " " << r << std::endl;
 			});
 		}
